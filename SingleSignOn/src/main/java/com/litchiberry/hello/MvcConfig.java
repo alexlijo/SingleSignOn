@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.lijo.hello;
+package com.litchiberry.hello;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
