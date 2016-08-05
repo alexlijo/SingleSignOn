@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 /**
  * @author lijo - security configuration that ensures that only authenticated users can see the
@@ -42,15 +44,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
             .permitAll()
             .and()
             .logout()
-            .permitAll();
+            .permitAll()
+            .and()
+            .csrf().csrfTokenRepository( csrfTokenRepository() );
+    }
+
+    private CsrfTokenRepository csrfTokenRepository()
+    {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setSessionAttributeName( "_csrf" );
+        return repository;
     }
 
     @Autowired
-    public void configureGlobal( AuthenticationManagerBuilder auth ) throws Exception
+    public void configureGlobal( AuthenticationManagerBuilder auth )
+        throws Exception
     {
         auth
             .inMemoryAuthentication()
-            .withUser( "user" ).password( "password" ).roles( "USER" );
+            .withUser( "lijoalex" ).password( "1234" ).roles( "USER" );
     }
 
 }
